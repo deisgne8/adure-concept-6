@@ -1,6 +1,6 @@
 import './vendor/leaflet.js';
 
-const detailUrl='https://deisgne8.github.io/adure-wireframe-v3.0/wireframe/index.html#property-detail';
+const detailUrl=property=>`property-detail.html?id=${encodeURIComponent(property.id)}`;
 const shareIcon='<svg class="share-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="18" cy="5" r="2.5"></circle><circle cx="6" cy="12" r="2.5"></circle><circle cx="18" cy="19" r="2.5"></circle><path d="M8.25 10.85 15.75 6.15M8.25 13.15l7.5 4.7"></path></svg>';
 const heartIcon='<svg class="heart-icon" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="m256.001 477.407c-2.59 0-5.179-.669-7.499-2.009-2.52-1.454-62.391-36.216-123.121-88.594-35.994-31.043-64.726-61.833-85.396-91.513-26.748-38.406-40.199-75.348-39.982-109.801.254-40.09 14.613-77.792 40.435-106.162 26.258-28.848 61.3-44.734 98.673-44.734 47.897 0 91.688 26.83 116.891 69.332 25.203-42.501 68.994-69.332 116.891-69.332 35.308 0 68.995 14.334 94.859 40.362 28.384 28.563 44.511 68.921 44.247 110.724-.218 34.393-13.921 71.279-40.728 109.632-20.734 29.665-49.426 60.441-85.279 91.475-60.508 52.373-119.949 87.134-122.45 88.588-2.331 1.354-4.937 2.032-7.541 2.032z"></path></svg>';
 
@@ -134,7 +134,7 @@ function card(property,index){
   return `<article class="property-card" data-property-id="${property.id}" data-index="${String((state.page-1)*state.pageSize+index+1).padStart(2,'0')}" style="animation-delay:${Math.min(index,6)*55}ms">
     <div class="property-card-media"><img src="${property.image}" alt="${esc(property.title)} at ${esc(property.building)}" loading="lazy" decoding="async"><span class="property-status">${esc(property.status)} · ${modeLabel(property)}</span><div class="property-media-actions"><button class="share-button" type="button" data-share="${property.id}" aria-label="Share ${esc(property.title)}">${shareIcon}</button><button class="favourite-button" type="button" data-favourite="${property.id}" aria-label="${saved.has(property.id)?'Remove from saved properties':'Save property'}" aria-pressed="${saved.has(property.id)}">${heartIcon}</button></div></div>
     <div class="property-card-body"><div class="property-location"><span class="location-pin-icon" aria-hidden="true"></span><span>${esc(property.community)} · ${esc(property.city)}</span></div><h3>${esc(property.title)}</h3><p class="property-building">${esc(property.building)} · ${esc(property.unit)}</p><div class="property-price">${priceLabel(property)}</div><div class="property-facts">${specMarkup(property)}</div><div class="property-card-footer"><span>${esc(reference)}</span><span class="view-property"><span>View property</span><span aria-hidden="true">→</span></span></div></div>
-    <a class="property-card-link" href="${detailUrl}" aria-label="View ${esc(property.title)}"></a>
+    <a class="property-card-link" href="${detailUrl(property)}" aria-label="View ${esc(property.title)}"></a>
   </article>`;
 }
 
@@ -205,7 +205,7 @@ function areaMarkerLabel(area,items){
 
 function mapDrawerCard(property){
   return `<article class="map-drawer-card" data-map-listing="${property.id}">
-    <a href="${detailUrl}" aria-label="View ${esc(property.title)}"></a>
+    <a href="${detailUrl(property)}" aria-label="View ${esc(property.title)}"></a>
     <div class="map-drawer-media"><img src="${property.image}" alt="${esc(property.title)}" loading="lazy" decoding="async"><div class="map-drawer-actions"><button class="map-drawer-share" type="button" data-share="${property.id}" aria-label="Share ${esc(property.title)}">${shareIcon}</button><button class="map-drawer-save" type="button" data-favourite="${property.id}" aria-label="${saved.has(property.id)?'Remove from saved properties':'Save property'}" aria-pressed="${saved.has(property.id)}">${heartIcon}</button></div></div>
     <div class="map-drawer-copy"><small class="map-drawer-location"><span class="location-pin-icon" aria-hidden="true"></span><span>${esc(property.community)} · ${esc(property.city)}</span></small><h3>${esc(property.title)}</h3><p>${esc(property.building)} · ${esc(property.unit)}</p><strong>${priceLabel(property)}</strong><div class="map-drawer-facts">${specMarkup(property)}</div></div>
   </article>`;
