@@ -2641,3 +2641,55 @@ body.customers-page main .customers-closing .customers-closing-card h2#closing-t
   background:var(--accent)!important;
   border-color:var(--accent)!important;
 }
+
+/* Browser request: keep testimonial controls clear of longer quotes. */
+.customers-page main .testimonials-section .perspectives-stage{
+  padding-bottom:clamp(1rem,2vw,2rem)!important;
+}
+.customers-page main .testimonials-section .perspectives-controls{
+  top:auto!important;
+  bottom:clamp(11.8rem,14vw,15.5rem)!important;
+}
+.customers-page main .testimonials-section .perspectives-thumbs{
+  margin-top:clamp(2.4rem,4vw,3.5rem)!important;
+}
+@media(max-width:980px){
+  .customers-page main .testimonials-section .perspectives-controls{
+    bottom:auto!important;
+  }
+}
+
+/* Browser request: match testimonial typography to CEO message scale. */
+.customers-page main .testimonials-section .perspectives-intro h2{
+  font-size:clamp(32px,3vw,44px)!important;
+  line-height:1.05!important;
+  font-weight:600!important;
+  letter-spacing:-.055em!important;
+}
+.customers-page main .testimonials-section .perspectives-intro p,
+.customers-page main .testimonials-section .perspectives-testimonial blockquote{
+  font-size:18px!important;
+  line-height:1.55!important;
+  letter-spacing:0!important;
+}
+.customers-page main .testimonials-section .perspectives-testimonial blockquote{
+  max-width:46rem!important;
+  font-style:italic!important;
+}
+.customers-page main .testimonials-section .perspectives-customer-meta{
+  margin-top:clamp(1.35rem,2.4vw,2.2rem)!important;
+}
+.customers-page main .testimonials-section .perspectives-customer-meta strong{
+  font-family:var(--font-body,var(--body))!important;
+  font-size:18px!important;
+  line-height:1.35!important;
+  font-weight:700!important;
+  letter-spacing:0!important;
+}
+.customers-page main .testimonials-section .perspectives-quote-mark{
+  font-size:clamp(58px,5vw,78px)!important;
+  margin-bottom:1rem!important;
+}
+.customers-page main .testimonials-section .perspectives-controls{
+  bottom:clamp(10.9rem,13vw,14rem)!important;
+}
