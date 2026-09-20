@@ -529,7 +529,7 @@ dialog:not(.mobile-menu){
   top:calc(100% + .85rem);
   left:50%;
   transform:translateX(-50%) translateY(8px);
-  min-width:15.5rem;
+  min-width:17.75rem;
   display:grid;
   gap:.15rem;
   padding:.75rem;

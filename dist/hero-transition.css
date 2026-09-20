@@ -6,11 +6,11 @@
 }
 
 #home > .site-hero{
-  position:relative;
+  position:sticky;
   top:0;
-  z-index:3;
+  z-index:0;
   width:100%;
-  height:auto;
+  height:100svh;
   min-height:max(42rem,100svh);
   --hero-media-y:0px;
   --hero-media-scale:1.09;
@@ -34,7 +34,7 @@
 #home > #journeys{
   position:relative;
   z-index:2;
-  margin-top:0;
+  margin-top:58svh;
   background:#fff;
   box-shadow:0 -1px 0 rgba(255,255,255,.45);
 }

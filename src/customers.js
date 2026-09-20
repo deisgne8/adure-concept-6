@@ -121,3 +121,37 @@ if(commitmentGrid){
   setCommitment(0);
   updateCommitmentFromScroll();
 }
+
+function updateCustomerTestimonial(slider,index){
+  const slides=$$('[data-testimonial-slide]',slider);
+  const thumbs=$$('[data-testimonial-thumb]',slider);
+  if(!slides.length)return;
+  const nextIndex=(index+slides.length)%slides.length;
+  slides.forEach((slide,i)=>slide.classList.toggle('is-active',i===nextIndex));
+  thumbs.forEach((thumb,i)=>{
+    const isActive=i===nextIndex;
+    thumb.classList.toggle('is-active',isActive);
+    thumb.setAttribute('aria-current',isActive?'true':'false');
+  });
+}
+function initialiseCustomerTestimonials(){
+  $$('[data-testimonial-slider]').forEach(slider=>updateCustomerTestimonial(slider,0));
+}
+document.addEventListener('click',event=>{
+  const control=event.target.closest('[data-testimonial-prev],[data-testimonial-next],[data-testimonial-thumb]');
+  if(!control)return;
+  const slider=control.closest('[data-testimonial-slider]');
+  if(!slider)return;
+  const slides=$$('[data-testimonial-slide]',slider);
+  const thumbs=$$('[data-testimonial-thumb]',slider);
+  const current=Math.max(0,slides.findIndex(slide=>slide.classList.contains('is-active')));
+  if(control.matches('[data-testimonial-prev]'))updateCustomerTestimonial(slider,current-1);
+  else if(control.matches('[data-testimonial-next]'))updateCustomerTestimonial(slider,current+1);
+  else updateCustomerTestimonial(slider,Math.max(0,thumbs.indexOf(control)));
+});
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',initialiseCustomerTestimonials,{once:true});
+}else{
+  initialiseCustomerTestimonials();
+}
+document.documentElement.dataset.customersJsReady='true';

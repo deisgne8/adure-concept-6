@@ -26,7 +26,7 @@ if(portfolioRoot&&portfolioRoot.dataset.portfolioReady!=='true'){
       {id:'al-ain-villas',title:'Al Ain Villas',city:'Al Ain',type:'Residential',location:'Al Ain',image:'assets/portfolio-modern-villa-v2.png',alt:'Modern villa exterior in a landscaped setting',description:'A concise two- to three-line introduction for Al Ain Villas will appear here once ADURE confirms the final project description.'}
     ]
   };
-  const labels={'abu-dhabi':'ABU DHABI BUILDINGS',dubai:'DUBAI BUILDINGS','al-ain':'AL AIN BUILDINGS'};
+  const labels={'abu-dhabi':'ABU DHABI',dubai:'DUBAI','al-ain':'AL AIN'};
   const tabs=[...portfolioRoot.querySelectorAll('.portfolio-city-tabs button')];
   const grid=portfolioRoot.querySelector('#portfolio-card-grid');
   const detail=portfolioRoot.querySelector('#portfolio-expanded-card');

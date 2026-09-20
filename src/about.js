@@ -111,7 +111,7 @@ if(storySection && $('.story-tilton-years', storySection) && $('.story-tilton-pr
         'Operational oversight, reporting and service coordination became a stronger part of the ADURE management approach.',
         'This period shaped the company’s focus on occupancy, asset care and better experiences for owners and occupiers.'
       ],
-      left:'assets/hidd-al-saadiyat/management-facility-facade.jpg',
+      left:'assets/portfolio-reference/48-burj-gate-v2.webp',
       right:'assets/hidd-al-saadiyat/management-leasing-lobby.jpg'
     },
     {
@@ -122,8 +122,8 @@ if(storySection && $('.story-tilton-years', storySection) && $('.story-tilton-pr
         'ADURE’s offer evolved into a clearer real estate model connecting buying, selling, leasing and management through one operating view.',
         'That wider perspective allows each property decision to support what comes next.'
       ],
-      left:'assets/journeys/sell.jpg',
-      right:'assets/journeys/manage.jpg'
+      left:'assets/portfolio-reference/qaryat-al-hidd-v2.webp',
+      right:'assets/hidd-al-saadiyat/management-leasing-lobby.jpg'
     },
     {
       year:'2021',
@@ -141,8 +141,10 @@ if(storySection && $('.story-tilton-years', storySection) && $('.story-tilton-pr
   const prev=$('.story-tilton-prev',storySection);
   const next=$('.story-tilton-next',storySection);
   const year=$('.story-tilton-year',storySection);
-  const title=$('#story-title',storySection);
+  const title=$('#story-heading',storySection);
   const card=$('.story-tilton-card',storySection);
+  const mainImage=$('.story-tilton-image-left img',storySection);
+  const nextImage=$('.story-tilton-image-next img',storySection);
   const paragraphs=$$('p:not(.story-tilton-year)',card).filter(p=>!p.classList.contains('about-eyebrow'));
   const railItems=$$('.story-tilton-years li',storySection);
   const railButtons=$$('.story-tilton-years button',storySection);
@@ -152,6 +154,15 @@ if(storySection && $('.story-tilton-years', storySection) && $('.story-tilton-pr
     const item=milestones[nextIndex];
     year.textContent=item.year;
     title.textContent=item.title;
+    if(mainImage&&item.left){
+      mainImage.src=item.left;
+      mainImage.alt=item.title;
+    }
+    if(nextImage){
+      const nextItem=milestones[(nextIndex+1)%milestones.length];
+      nextImage.src=nextItem.left||item.right||item.left;
+      nextImage.alt='';
+    }
     paragraphs.forEach((paragraph,i)=>{paragraph.textContent=item.body[i]||''; paragraph.hidden=!item.body[i];});
     railItems.forEach((li,i)=>{
       li.classList.toggle('is-active',i===nextIndex);
@@ -194,6 +205,26 @@ if(storySection && $('.story-tilton-years', storySection) && $('.story-tilton-pr
     if(event.key==='ArrowRight')go(index+1);
     if(event.key==='ArrowLeft')go(index-1);
   });
+  let storyPointerStart=null;
+  stage?.addEventListener('pointerdown',event=>{
+    storyPointerStart={x:event.clientX,y:event.clientY};
+    stage.setPointerCapture?.(event.pointerId);
+  });
+  stage?.addEventListener('pointerup',event=>{
+    if(!storyPointerStart)return;
+    const dx=event.clientX-storyPointerStart.x;
+    const dy=event.clientY-storyPointerStart.y;
+    storyPointerStart=null;
+    if(Math.abs(dx)>48&&Math.abs(dx)>Math.abs(dy)*1.2)go(index+(dx<0?1:-1));
+  });
+  storySection.addEventListener('wheel',event=>{
+    const primary=Math.abs(event.deltaX)>Math.abs(event.deltaY)?event.deltaX:event.deltaY;
+    if(Math.abs(primary)<18||locked)return;
+    const nextIndex=index+(primary>0?1:-1);
+    if(nextIndex<0||nextIndex>=milestones.length)return;
+    event.preventDefault();
+    go(nextIndex);
+  },{passive:false});
   paint(0);
 }
 

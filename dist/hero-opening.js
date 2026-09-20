@@ -71,18 +71,12 @@ async function open(){
 
   const brand=intro.querySelector('.intro-brand');
   const caption=[...intro.querySelectorAll('.intro-caption span')];
-  const rings=[...intro.querySelectorAll('.intro-ring')];
   const revealDuration=1800;
   const handoffDuration=520;
-  video.style.cssText='inset:0;width:100%;height:100%;opacity:0;object-fit:cover;transform-origin:50% 50%;clip-path:inset(0 0 0 0);border:0;border-radius:0';
+  video.style.cssText='inset:0;width:100%;height:100%;opacity:0;object-fit:cover;transform-origin:50% 100%;clip-path:inset(100% 0 0 0);border:0;border-radius:0';
   video.play().catch(()=>{});
   root.dataset.opening='brand';
 
-  rings.forEach((ring,index)=>animate(ring,[
-    {opacity:0,transform:`translate(-50%,-50%) rotate(${index?-150:150}deg) scale(.78)`},
-    {opacity:.72,transform:'translate(-50%,-50%) rotate(24deg) scale(1.04)',offset:.7},
-    {opacity:.22,transform:'translate(-50%,-50%) rotate(0deg) scale(1)'}
-  ],{duration:900,easing:'cubic-bezier(.4,0,.16,1)'}));
   await animate(brand,[
     {opacity:0,clipPath:'inset(0 0 0 0)',transform:'translateY(10px) scale(.96)'},
     {opacity:1,clipPath:'inset(0 0 0 0)',transform:'translateY(0) scale(1)'}
@@ -105,14 +99,13 @@ async function open(){
     {opacity:0,transform:'translateY(-18px) scale(.96)'}
   ],{duration:revealDuration,easing:'cubic-bezier(.4,0,.2,1)'});
   animate(intro.querySelector('.intro-caption'),[{opacity:1,transform:'translateY(0)'},{opacity:0,transform:'translateY(-12px)'}],{duration:620,easing:'ease-in'});
-  rings.forEach(ring=>animate(ring,[{opacity:.22,transform:'translate(-50%,-50%) rotate(0deg) scale(1)'},{opacity:0,transform:'translate(-50%,-50%) rotate(18deg) scale(1.1)'}],{duration:620,easing:'ease-in'}));
   const heroScale=getComputedStyle(hero).getPropertyValue('--hero-media-scale').trim()||'1';
-  const revealStartScale=(Number.parseFloat(heroScale)||1)+.08;
-  // Reveal the full-size playing film in one continuous movement, without a
-  // contained-card hold or a second expansion phase.
+  const revealStartScale=(Number.parseFloat(heroScale)||1)+.12;
+  // Bring the playing film up from the bottom so the hero enters as a rising
+  // motion rather than a crossfade.
   const videoReveal=animate(video,[
-    {opacity:0,transform:`scale(${revealStartScale})`,clipPath:'inset(0 0 0 0)'},
-    {opacity:1,transform:`scale(${revealStartScale * .985})`,clipPath:'inset(0 0 0 0)',offset:.38},
+    {opacity:1,transform:`translateY(18%) scale(${revealStartScale})`,clipPath:'inset(100% 0 0 0)'},
+    {opacity:1,transform:`translateY(4%) scale(${revealStartScale * .985})`,clipPath:'inset(24% 0 0 0)',offset:.54},
     {opacity:1,transform:`scale(${heroScale})`,clipPath:'inset(0 0 0 0)'}
   ],{duration:revealDuration,easing:'cubic-bezier(.22,1,.36,1)'});
   // Crossfade to the real navigation during the final part of the reveal so

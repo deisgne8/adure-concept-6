@@ -5,7 +5,7 @@ const excluded='header, footer, nav, dialog, .site-logo, .mobile-menu, .leaflet-
 const parallaxItems=new Map();
 let revealObserver=null,parallaxObserver=null,frame=0,lastTime=0;
 const clamp=value=>Math.max(-1,Math.min(1,value));
-function shouldSkip(node){return !node||node.closest(excluded)||node.matches?.('[hidden],[aria-hidden="true"]')}
+function shouldSkip(node){return !node||node.matches?.('.home-v2,[hidden],[aria-hidden="true"]')||node.closest(excluded)}
 function revealCandidates(){return [...document.querySelectorAll(revealSelector)].filter(node=>!shouldSkip(node)&&node.offsetParent!==null)}
 function parallaxCandidates(){return [...document.querySelectorAll(imageSelector)].filter(node=>!shouldSkip(node)&&node.offsetParent!==null)}
 function initReveal(){
